@@ -33,7 +33,7 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('post_id', 'user_id')
     )
-    op.drop_table('socialmedia-products')
+#    op.drop_table('socialmedia-products')
     op.add_column('posts', sa.Column('content', sa.String(), nullable=False))
     op.add_column('posts', sa.Column('published', sa.Boolean(), server_default='TRUE', nullable=False))
     op.add_column('posts', sa.Column('created_at', sa.TIMESTAMP(timezone=True), server_default=sa.text('now()'), nullable=False))
@@ -49,15 +49,15 @@ def downgrade():
     op.drop_column('posts', 'created_at')
     op.drop_column('posts', 'published')
     op.drop_column('posts', 'content')
-    op.create_table('socialmedia-products',
-    sa.Column('prodname', sa.VARCHAR(), autoincrement=False, nullable=False),
-    sa.Column('price', sa.INTEGER(), autoincrement=False, nullable=False),
-    sa.Column('id', sa.INTEGER(), server_default=sa.text('nextval(\'"socialmedia-products_id_seq"\'::regclass)'), autoincrement=True, nullable=False),
-    sa.Column('is_onsale', sa.BOOLEAN(), server_default=sa.text('false'), autoincrement=False, nullable=True),
-    sa.Column('inventory', sa.INTEGER(), server_default=sa.text('0'), autoincrement=False, nullable=False),
-    sa.Column('created_at', postgresql.TIMESTAMP(timezone=True), server_default=sa.text('now()'), autoincrement=False, nullable=False),
-    sa.PrimaryKeyConstraint('id', name='socialmedia-products_pkey')
-    )
+    # op.create_table('socialmedia-products',
+    # sa.Column('prodname', sa.VARCHAR(), autoincrement=False, nullable=False),
+    # sa.Column('price', sa.INTEGER(), autoincrement=False, nullable=False),
+    # sa.Column('id', sa.INTEGER(), server_default=sa.text('nextval(\'"socialmedia-products_id_seq"\'::regclass)'), autoincrement=True, nullable=False),
+    # sa.Column('is_onsale', sa.BOOLEAN(), server_default=sa.text('false'), autoincrement=False, nullable=True),
+    # sa.Column('inventory', sa.INTEGER(), server_default=sa.text('0'), autoincrement=False, nullable=False),
+    # sa.Column('created_at', postgresql.TIMESTAMP(timezone=True), server_default=sa.text('now()'), autoincrement=False, nullable=False),
+    # sa.PrimaryKeyConstraint('id', name='socialmedia-products_pkey')
+    # )
     op.drop_table('votes')
     op.drop_table('users')
     # ### end Alembic commands ###
